@@ -15,7 +15,7 @@ kustomize build app/ | kubectl apply -f -
 We can use kubectl without kustomize and apply manifest one by one or create one big yaml
 
 In kubernetes there is nothing like bridge network so I decided to use separate pods and services + ingress to expose it outside k8s.
-This solution doesn't work to me so I switched to two containers in one pod because services communicate on localhost but even this didn't help.;: 
+This solution doesn't work to me so I switched to two containers in one pod because services communicate on localhost but even this didn't help.
 
 1. **CI/CD**
    - How would you set up a basic CI/CD pipeline to build, test, and deploy the microservices to the remote Kubernetes cluster?
