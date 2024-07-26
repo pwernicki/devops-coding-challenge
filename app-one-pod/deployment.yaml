@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: challenge
+spec:
+  selector:
+    matchLabels:
+      app: app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: frontend
+        image: docker.io/pwernicki/frontend
+        ports:
+        - containerPort: 80
+      - name: backend
+        image: docker.io/pwernicki/backend
+        env:
+        - name: PORT
+          value: "8080"
+        - name: FRONTEND_HOST
+          value: "frontend:3000"
+        ports:
+        - containerPort: 8080

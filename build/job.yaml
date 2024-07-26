@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: build
+  namespace: build
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: clone-repo
+        image: alpine/git
+        args:
+        - clone
+        - --
+        - https://aloise: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@github.com/smart-host/devops-coding-challenge.git
+        - /git
+        volumeMounts:
+        - mountPath: '/git'
+          name: build-vol
+      containers:
+      - name: build-backend-image
+        image: gcr.io/kaniko-project/executor:latest
+        args:
+        - "--dockerfile=Dockerfile"
+        - "--context=dir:///git/backend"
+        - "--destination=docker.io/pwernicki/backend"
+        volumeMounts:
+        - mountPath: '/git'
+          name: build-vol
+        - name: config
+          mountPath: "/kaniko/.docker"
+          readOnly: true
+      - name: build-frontend-image
+        image: gcr.io/kaniko-project/executor:latest
+        args:
+        - "--dockerfile=Dockerfile"
+        - "--context=dir:///git/frontend"
+        - "--destination=docker.io/pwernicki/frontend"
+        volumeMounts:
+        - mountPath: '/git'
+          name: build-vol
+        - name: config
+          mountPath: "/kaniko/.docker"
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+        - name: build-vol
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: config
+            items:
+            - key: "config.json"
+              path: "config.json"
