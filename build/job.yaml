@@ -12,7 +12,7 @@ spec:
         args:
         - clone
         - --
-        - https://aloise:xxxxxxxxxxxxxxxxxxxxxxx@github.com/smart-host/devops-coding-challenge.git
+        - https://xxxxxxxxxxxx/smart-host/devops-coding-challenge.git
         - /git
         volumeMounts:
         - mountPath: '/git'
