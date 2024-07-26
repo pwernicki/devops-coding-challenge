@@ -1,0 +1,19 @@
+pwernicki@k3s:~/challenge$ kubectl get all -n challenge
+NAME                       READY   STATUS    RESTARTS   AGE
+pod/app-6c549874b5-bbf6f   2/2     Running   0          9h
+
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/frontend   ClusterIP   10.43.151.84   <none>        3000/TCP   10h
+
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/app   1/1     1            1           10h
+
+NAME                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/app-5dcfb7dcb6   0         0         0       9h
+replicaset.apps/app-66658bc86c   0         0         0       10h
+replicaset.apps/app-6c549874b5   1         1         1       9h
+
+
+pwernicki@k3s:~/challenge$ kubectl get ingress -n challenge
+NAME       CLASS     HOSTS   ADDRESS   PORTS   AGE
+frontend   traefik   *                 80      10h
